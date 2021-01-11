@@ -5,11 +5,8 @@
  */
 package duytt.controller;
 
-import duytt.daos.ProductDAO;
-import duytt.daos.UserDAO;
 import duytt.dtos.Category;
 import duytt.dtos.Product;
-import duytt.dtos.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -23,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author thant
  */
-public class LoginController extends HttpServlet {
+public class LogoutController extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,25 +30,20 @@ public class LoginController extends HttpServlet {
 	 * @throws ServletException if a servlet-specific error occurs
 	 * @throws IOException if an I/O error occurs
 	 */
-	private final static String ERROR = "login.jsp";
-	private final static String SUCCESS = "product.jsp";
+	private static final String SUCCESS = "home.jsp";
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
-		String url = ERROR;
-		HttpSession session = request.getSession();
+		String url = SUCCESS;
 		try {
-			String userID = request.getParameter("userAccount");
-			String password = request.getParameter("password");
-			User user = new UserDAO().checkLogin(userID, password);
-			if (user != null) {
-				session.setAttribute("USER", user);
-				session.setAttribute("SUCCESS", "Success");
-				
-				url = SUCCESS;
+			HttpSession session = request.getSession(false);
+			
+			if (session != null) {
+				session.invalidate();
 			}
-		} catch (Exception e) {
+
+
 		} finally {
 			response.sendRedirect(url);
 		}

@@ -5,11 +5,13 @@
  */
 package duytt.dtos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author thant
  */
-public class Category {
+public class Category implements Serializable{
 	private String cateID;
 	private String cateName;
 	private boolean status;

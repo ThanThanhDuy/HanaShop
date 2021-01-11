@@ -5,11 +5,13 @@
  */
 package duytt.dtos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author thant
  */
-public class Product {
+public class Product implements Serializable{
 	private String proID;
 	private String proName;
 	private float price;

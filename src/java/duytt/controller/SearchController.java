@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -38,6 +39,7 @@ public class SearchController extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		String url = ERROR;
 		try {
+			HttpSession session = request.getSession();
 			String minPrice = request.getParameter("minPrice");
 			if (minPrice == null || minPrice.isEmpty() || minPrice.equals("")) {
 				minPrice = new ProductDAO().getMinPrice();
@@ -54,61 +56,27 @@ public class SearchController extends HttpServlet {
 			String sql = "";
 			String sqlpage = "";
 			int indexS = Integer.parseInt(request.getParameter("index"));
-//			if (minPrice == null && maxPrice == null && cate == null) {
-////				sql = "select [foodId],[foodName],[price],[quantity],[status],[createDate],[image],[categoryId] from [dbo].[tblFood] where [foodName] like N'%%' and status=1  and [quantity] > 0 and price >= (select min(price) from tblFood) \n"
-////						+ "and price <= (select max(price) from tblFood)";
-//				sql = "with tblTemp as(select ROW_NUMBER() over ( order by [createDate] asc) as num,[foodId],[foodName],[price],[quantity],[status],[createDate],[image],[categoryId] from [dbo].[tblFood] where [foodName] like N'%%' and status=1  and [quantity] > 0 and price >= (select min(price) from tblFood) \n"
-//						+ "and price <= (select max(price) from tblFood)) select [foodId],[foodName],[price],[quantity],[status],[createDate],[image],[categoryId] from tblTemp where num between " + (indexS * 20 - 19) + " and " + (indexS * 20);
-//				sqlpage = "select count(foodId) as soluong from [dbo].[tblFood] where [foodName] like N'%%' and status=1  and [quantity] > 0 and price >= (select min(price) from tblFood) \n"
-//						+ "and price <= (select max(price) from tblFood)";
-//				request.setAttribute("MINPRICE", minPrice);
-//				request.setAttribute("MAXPRICE", maxPrice);
-//				request.setAttribute("CATE", cate);
-//				request.setAttribute("TXTSEARCH", txtSearch);
-//			} else {
-//				if (cate.equals("All")) {
-//					sql = "select [foodId],[foodName],[price],[quantity],[status],[createDate],[image],[categoryId] from [dbo].[tblFood] where [foodName] like N'%" + txtSearch + "%' and status=1  and [quantity] > 0 and price >= " + minPrice + "\n"
-//							+ "and price <=  " + maxPrice;
-//					sqlpage = "select count(foodId) as soluong from [dbo].[tblFood] where [foodName] like N'%" + txtSearch + "%' and status=1  and [quantity] > 0 and price >= " + minPrice + "\n"
-//							+ "and price <=  " + maxPrice;
-//					request.setAttribute("MINPRICE", minPrice);
-//					request.setAttribute("MAXPRICE", maxPrice);
-//					request.setAttribute("CATE", cate);
-//					request.setAttribute("TXTSEARCH", txtSearch);
-//				} else {
-////					sql = "select [foodId],[foodName],[price],[quantity],[status],[createDate],[image],[categoryId] from [dbo].[tblFood] where [foodName] like N'%" + txtSearch + "%' and status=1  and [quantity] > 0 and price >= " + minPrice + "\n"
-////							+ "and price <=  " + maxPrice + " and categoryId = '" + cate + "'";
-//					sql = "with tblTemp as(select ROW_NUMBER() over ( order by [createDate] asc) as num,[foodId],[foodName],[price],[quantity],[status],[createDate],[image],[categoryId] from [dbo].[tblFood] where [foodName] like N'%" + txtSearch + "%' and status=1  and [quantity] > 0 and price >= " + minPrice + "\n"
-//							+ "and price <=  " + maxPrice + " and categoryId = '"+cate+"' ) select [foodId],[foodName],[price],[quantity],[status],[createDate],[image],[categoryId] from tblTemp where num between " + (indexS * 20 - 19) + " and " + (indexS * 20);
-//					sqlpage = "select count(foodId) as soluong from [dbo].[tblFood] where [foodName] like N'%" + txtSearch + "%' and status=1  and [quantity] > 0 and price >= " + minPrice + "\n"
-//							+ "and price <=  " + maxPrice + " and categoryId = '" + cate + "'";
-//					request.setAttribute("MINPRICE", minPrice);
-//					request.setAttribute("MAXPRICE", maxPrice);
-//					request.setAttribute("CATE", cate);
-//					request.setAttribute("TXTSEARCH", txtSearch);
-//				}
-//			}
 			if (cate.equals("All")) {
 
 				sql = "with tblTemp as(select ROW_NUMBER() over ( order by [createDate] asc) as num,[foodId],[foodName],[price],[quantity],[status],[createDate],[image],[categoryId] from [dbo].[tblFood] where [foodName] like N'%" + txtSearch + "%' and status=1  and [quantity] > 0 and price >= " + minPrice + "\n"
 						+ "and price <=  " + maxPrice + ") select [foodId],[foodName],[price],[quantity],[status],[createDate],[image],[categoryId] from tblTemp where num between " + (indexS * 20 - 19) + " and " + (indexS * 20);
 				sqlpage = "select count(foodId) as soluong from [dbo].[tblFood] where [foodName] like N'%" + txtSearch + "%' and status=1  and [quantity] > 0 and price >= " + minPrice + "\n"
 						+ "and price <=  " + maxPrice;
-				request.setAttribute("MINPRICE", minPrice);
-				request.setAttribute("MAXPRICE", maxPrice);
-				request.setAttribute("CATE", cate);
-				request.setAttribute("TXTSEARCH", txtSearch);
+				session.setAttribute("MINPRICE", minPrice);
+				session.setAttribute("MAXPRICE", maxPrice);
+				session.setAttribute("CATE", cate);
+				session.setAttribute("TXTSEARCH", txtSearch);
 
 			} else {
 
 				sql = "with tblTemp as(select ROW_NUMBER() over ( order by [createDate] asc) as num,[foodId],[foodName],[price],[quantity],[status],[createDate],[image],[categoryId] from [dbo].[tblFood] where [foodName] like N'%" + txtSearch + "%' and status=1  and [quantity] > 0 and price >= " + minPrice + "\n"
 						+ "and price <=  " + maxPrice + "and categoryId = '" + cate + "' ) select [foodId],[foodName],[price],[quantity],[status],[createDate],[image],[categoryId] from tblTemp where num between " + (indexS * 20 - 19) + " and " + (indexS * 20);
 				sqlpage = "select count(foodId) as soluong from [dbo].[tblFood] where [foodName] like N'%" + txtSearch + "%' and status=1  and [quantity] > 0 and price >= " + minPrice + "\n"
-						+ "and price <=  " + maxPrice;
-				request.setAttribute("MINPRICE", minPrice);
-				request.setAttribute("MAXPRICE", maxPrice);
-				request.setAttribute("CATE", cate);
-				request.setAttribute("TXTSEARCH", txtSearch);
+						+ "and price <=  " + maxPrice + "and categoryId = '" + cate + "'";
+				session.setAttribute("MINPRICE", minPrice);
+				session.setAttribute("MAXPRICE", maxPrice);
+				session.setAttribute("CATE", cate);
+				session.setAttribute("TXTSEARCH", txtSearch);
 			}
 
 			List<Category> listCate = (List<Category>) new ProductDAO().getCate();
@@ -118,9 +86,10 @@ public class SearchController extends HttpServlet {
 			if (soluong % 20 != 0) {
 				index++;
 			}
-			request.setAttribute("LISTPRODUCT", listProduct);
-			request.setAttribute("LISTCATE", listCate);
-			request.setAttribute("INDEX", index);
+			session.setAttribute("LISTPRODUCT", listProduct);
+			session.setAttribute("LISTCATE", listCate);
+			session.setAttribute("INDEX", index);
+			session.setAttribute("SUCCESS", null);
 			url = SUCCESS;
 		} catch (Exception e) {
 		} finally {

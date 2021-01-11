@@ -30,6 +30,8 @@ public class MainController extends HttpServlet {
 	private final static String LOGIN_PAGE = "login.jsp";
 	private final static String SHOPPING_PAGE = "ProdcutController";
 	private final static String SEARCH= "SearchController";
+	private final static String LOGOUT= "LogoutController";
+	private final static String HOME= "home.jsp";
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
@@ -48,6 +50,12 @@ public class MainController extends HttpServlet {
 			}
 			if (("Search").equals(action)) {
 				url = SEARCH;
+			}
+			if (("Logout").equals(action)) {
+				url = LOGOUT;
+			}
+			if (("Home").equals(action)) {
+				url = HOME;
 			}
 		}catch (Exception e) {
 			

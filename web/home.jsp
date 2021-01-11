@@ -141,12 +141,12 @@
 		<header>
 			<div class="header_top" style="margin: 0 auto;">
 				<div class="container">
-					<div class="row">
+					<div class="row" style="display: flex;justify-content: center;margin-left: 100px">
 						<div class="col-lg-6 col-md-6">
-							<div class="header_top_left" style="padding-top: 20px;">
-								<ul>
+							<div class="header_top_left" style="padding-top: 20px;display: flex;justify-content: center">
+								<ul >
 									<li><i class="far fa-envelope"></i> duyttse140971@fpt.edu.vn</li>
-									<li class="note">Free Shipping for all Order of $99</li>
+									
 								</ul>
 							</div>
 						</div>
@@ -160,35 +160,35 @@
 										<li style="padding-top: 4px;" class="note">Support 24/7</li>
 									</ul>
 								</div>
-								<div class="header_top_right__auth">
-<!--									<button style="margin-left: 30px;" type="button" class="btn btn-outline-secondary"><i
-											class="far fa-user"></i> Login</button>-->
+<!--								<div class="header_top_right__auth">
+									<button style="margin-left: 30px;" type="button" class="btn btn-outline-secondary"><i
+											class="far fa-user"></i> Login</button>
 									<a style="margin-left: 30px;" href="MainController?btnAction=Login" class="btn btn-outline-secondary" role="button" aria-pressed="true"><i
 											class="far fa-user"></i> Login</a>
-								</div>
+								</div>-->
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="header_bottom">
 					<nav class="navbar navbar-expand-lg navbar-light bg-light static-top mb-5"
-						 style="background-color: #fff !important; height: 83px;">
-						<div class="container">
-							<a class="navbar-brand" href="#"><img src="./Logo.png" alt="Logo" style="width: 120px;"></a>
+						 style="background-color: #fff !important; height: 83px;display: flex;justify-content: center">
+						<div class="container" >
+							<a class="navbar-brand" href="#"><img src="./Logo.png" alt="Logo" style="width: 120px;margin-left: 200px"></a>
 							<button class="navbar-toggler" type="button" data-toggle="collapse"
 									data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
 									aria-label="Toggle navigation">
 								<span class="navbar-toggler-icon"></span>
 							</button>
-							<div class="collapse navbar-collapse" id="navbarResponsive" style="height: 56px;padding-bottom: 10px;">
+							<div class="collapse navbar-collapse" id="navbarResponsive" style="height: 56px;padding-bottom: 10px; margin-left: 200px">
 								<ul class="navbar-nav ml-auto">
 									<li class="nav-item">
-										<a class="nav-link active" href="#">HOME
+										<a class="nav-link active" href="MainController?btnAction=Home">HOME
 											<span class="sr-only">(current)</span>
 										</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link " href="#">PRODUCT</a>
+										<a class="nav-link " href="MainController?minPrice=&maxPrice=&cate=All&txtSearch=&index=1&btnAction=Search">PRODUCT</a>
 									</li>
 									<li class="nav-item">
 										<a class="nav-link" href="#">CONTACT</a>
