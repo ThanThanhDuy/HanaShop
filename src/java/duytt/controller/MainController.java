@@ -6,7 +6,6 @@
 package duytt.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +31,19 @@ public class MainController extends HttpServlet {
 	private final static String SEARCH= "SearchController";
 	private final static String LOGOUT= "LogoutController";
 	private final static String HOME= "home.jsp";
+	private final static String CART_ADD= "Cart_AddController";
+	private final static String VIEW_CART= "view_cart.jsp";
+	private final static String UPDATEREDEUCE= "UpdateRDController";
+	private final static String UPDATEINCREASE= "UpdateIRController";
+	private final static String CART_BACK= "product.jsp";
+	private final static String DELETE_PRO_CART= "DeleteProCartController";
+	private final static String ORDER_NOW= "OrderNowController";
+	private final static String SEARCHAD= "SearchAdController";
+	private final static String UPDATEPRO= "UpdateProController";
+	private final static String SEARCHHIS= "SearchHisController";
+	private final static String REMOVE= "RemoveController";
+	private final static String ADDPAGE= "pro_create.jsp";
+	private final static String ADD= "AddProductController";
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
@@ -51,14 +63,56 @@ public class MainController extends HttpServlet {
 			if (("Search").equals(action)) {
 				url = SEARCH;
 			}
+			if (("SearchAd").equals(action)) {
+				url = SEARCHAD;
+			}
 			if (("Logout").equals(action)) {
 				url = LOGOUT;
 			}
 			if (("Home").equals(action)) {
 				url = HOME;
 			}
+			if (("Addtocart").equals(action)) {
+				url = CART_ADD;
+			}
+			if (("view_cart").equals(action)) {
+				url = VIEW_CART;
+			}
+			if (("reduceQuanity").equals(action)) {
+				url = UPDATEREDEUCE;
+			}
+			if (("increaQuanity").equals(action)) {
+				url = UPDATEINCREASE;
+			}
+			if (("Back_cart").equals(action)) {
+				url = CART_BACK;
+			}
+			if (("delete_proCart").equals(action)) {
+				url = DELETE_PRO_CART;
+			}
+			if (("Check Out").equals(action)) {
+				url = ORDER_NOW;
+			}
+			if (("Update").equals(action)) {
+				url = UPDATEPRO;
+			}
+			if (("searchHis").equals(action)) {
+				url = SEARCHHIS;
+			}
+			if (("history").equals(action)) {
+				url = SEARCHHIS;
+			}
+			if (("Remove").equals(action)) {
+				url = REMOVE;
+			}
+			if (("addProduct").equals(action)) {
+				url = ADDPAGE;
+			}
+			if (("Add Product").equals(action)) {
+				url = ADD;
+			}
 		}catch (Exception e) {
-			
+			log("MainController: "+e.toString());
 		} finally {
 			request.getRequestDispatcher(url).forward(request, response);
 		}

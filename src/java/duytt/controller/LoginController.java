@@ -5,14 +5,9 @@
  */
 package duytt.controller;
 
-import duytt.daos.ProductDAO;
 import duytt.daos.UserDAO;
-import duytt.dtos.Category;
-import duytt.dtos.Product;
 import duytt.dtos.User;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +30,8 @@ public class LoginController extends HttpServlet {
 	 */
 	private final static String ERROR = "login.jsp";
 	private final static String SUCCESS = "product.jsp";
-
+	private final static String ADMIN = "SearchAdController";
+	
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
@@ -44,20 +40,60 @@ public class LoginController extends HttpServlet {
 		try {
 			String userID = request.getParameter("userAccount");
 			String password = request.getParameter("password");
-			User user = new UserDAO().checkLogin(userID, password);
-			if (user != null) {
-				session.setAttribute("USER", user);
-				session.setAttribute("SUCCESS", "Success");
-				
-				url = SUCCESS;
+			session.setAttribute("userID_ERROR", null);
+			session.setAttribute("password_ERROR", null);
+			session.setAttribute("userAccount", null);
+			boolean check = true;
+			if (userID.isEmpty()) {
+				check = false;
+				session.setAttribute("userID_ERROR", "Your Account not empty");
+			} else if (userID.length() > 50) {
+				check = false;
+				session.setAttribute("userID_ERROR", "Your Account length <= 50");
+			} else if (!userID.matches("[A-Za-z0-9]+")) {
+				check = false;
+				session.setAttribute("userID_ERROR", "Your Account mustn't have special characters");
+			} else {
+				session.setAttribute("userAccount", userID);
 			}
+			if (password.isEmpty()) {
+				check = false;
+				session.setAttribute("password_ERROR", "Password not empty");
+			} else if (password.length() > 30) {
+				check = false;
+				session.setAttribute("password_ERROR", "Password length <= 30");
+			} else if (!password.matches("[A-Za-z0-9]+")) {
+				check = false;
+				session.setAttribute("password_ERROR", "Password mustn't have special characters");
+			}
+			if (check) {
+				User user = new UserDAO().checkLogin(userID, password);
+				if (user != null) {
+					if (user.isStatus()) {
+						session.setAttribute("USER", user);
+						session.setAttribute("Error_Login", null);
+						session.setAttribute("SUCCESS", "success");
+						if (user.getRoleID().equals("AD")) {
+							url = ADMIN;
+						} else if (user.getRoleID().equals("US")) {
+							url = SUCCESS;
+						}
+					} else {
+						session.setAttribute("Error_Login", "The account has been locked");
+					}
+				} else {
+					session.setAttribute("Error_Login", "Wrong User Account or Password. Please try again!");
+				}
+			}
+			
 		} catch (Exception e) {
+			log("LoginController: " + e.toString());
 		} finally {
 			response.sendRedirect(url);
 		}
 	}
 
-	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 	/**
 	 * Handles the HTTP <code>GET</code> method.
 	 *

@@ -5,6 +5,10 @@
  */
 package duytt.controller;
 
+import duytt.daos.ProductDAO;
+import duytt.dtos.Cart;
+import duytt.dtos.Product;
+import duytt.dtos.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author thant
  */
-public class LogoutController extends HttpServlet {
+public class UpdateRDController extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -26,19 +30,59 @@ public class LogoutController extends HttpServlet {
 	 * @throws ServletException if a servlet-specific error occurs
 	 * @throws IOException if an I/O error occurs
 	 */
-	private static final String SUCCESS = "SearchController";
+	private final static String ERROR = "view_cart.jsp";
+	private final static String SUCCESS = "view_cart.jsp";
+	private final static String NOTUS = "login.jsp";
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
-		String url = SUCCESS;
+		String url = ERROR;
+		HttpSession session = request.getSession();
 		try {
-			HttpSession session = request.getSession(false);
-			if (session != null) {
-				session.invalidate();
+			
+			User user = (User) session.getAttribute("USER");
+			if (user == null) {
+				url = NOTUS;
+			} else {
+				if (user.getRoleID().equals("US")) {
+					session.setAttribute("TOTAL", null);
+			String proID = request.getParameter("proID");
+			Product pro = new ProductDAO().getAProduct(proID);
+			if (pro != null) {
+				Cart cart = (Cart) session.getAttribute("CART");
+				if (cart != null) {
+					if (cart.getCart() != null) {
+						if (cart.getCart().containsKey(proID)) {
+							Product proTemp = cart.getCart().get(proID);
+							if ( proTemp.getQuanity() >1) {
+								proTemp.setQuanity(proTemp.getQuanity() - 1);
+								cart.update(proTemp);
+							} else {
+
+							}
+						}
+					}
+					int total = 0;
+					if (cart.getCart().values() != null) {
+						for (Product proS : cart.getCart().values()) {
+							total += proS.getPrice() * proS.getQuanity();
+						}
+					}
+					session.setAttribute("COUNT", cart.getCart().keySet().size());
+					session.setAttribute("CART", cart);
+					session.setAttribute("TOTAL", total);
+					url = SUCCESS;
+				}
 			}
+				} else {
+					url = NOTUS;
+				}
+			}
+		} catch (Exception e) {
+			log("UpdateRDController: " + e.toString());
 		} finally {
-			response.sendRedirect(url);
+			request.getRequestDispatcher(url).forward(request, response);
 		}
 	}
 

@@ -131,12 +131,15 @@
 							<div class="row">
 								<div class="col-md-9 col-lg-8 mx-auto" style="padding-top: 100px;">
 									<h3 class="login-heading mb-4">Welcome back!</h3>
+									<p style="color: red; text-align: center; font-size: 15px">${sessionScope.Error_Login}</p>
 									<form action="MainController" method="POST">
 										<div class="form-label-group">
 											<input type="text" id="inputEmail" class="form-control" placeholder="Email address" name="userAccount" required autofocus>
+											<p style="color: red; text-align: center; font-size: 15px">${sessionScope.userID_ERROR}</p>
 										</div>
 										<div class="form-label-group">
 											<input type="password" id="inputPassword" class="form-control"placeholder="Password" name="password" required>
+											<p style="color: red; text-align: center; font-size: 15px">${sessionScope.password_ERROR}</p>
 										</div>
 										<input
 											class="btn btn-lg btn-success btn-block btn-login text-uppercase font-weight-bold mb-2"

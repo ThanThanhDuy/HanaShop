@@ -21,12 +21,12 @@ public class Product implements Serializable{
 	private int quanity;
 	private boolean status;
 	private String cateId;
+	private String hsd;
 
 	public Product() {
 	}
 
-	
-	public Product(String proID, String proName, float price, String descript, String createDate, String image, int quanity, boolean status, String cateId) {
+	public Product(String proID, String proName, float price, String descript, String createDate, String image, int quanity, boolean status, String cateId, String hsd) {
 		this.proID = proID;
 		this.proName = proName;
 		this.price = price;
@@ -36,6 +36,7 @@ public class Product implements Serializable{
 		this.quanity = quanity;
 		this.status = status;
 		this.cateId = cateId;
+		this.hsd = hsd;
 	}
 
 	public String getProID() {
@@ -109,6 +110,17 @@ public class Product implements Serializable{
 	public void setCateId(String cateId) {
 		this.cateId = cateId;
 	}
+
+	public String getHsd() {
+		return hsd;
+	}
+
+	public void setHsd(String hsd) {
+		this.hsd = hsd;
+	}
+
+	
+	
 	
 	
 }

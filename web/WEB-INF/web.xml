@@ -20,6 +20,50 @@
         <servlet-name>LogoutController</servlet-name>
         <servlet-class>duytt.controller.LogoutController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Cart_AddController</servlet-name>
+        <servlet-class>duytt.controller.Cart_AddController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateRDController</servlet-name>
+        <servlet-class>duytt.controller.UpdateRDController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateIRController</servlet-name>
+        <servlet-class>duytt.controller.UpdateIRController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteProCartController</servlet-name>
+        <servlet-class>duytt.controller.DeleteProCartController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderNowController</servlet-name>
+        <servlet-class>duytt.controller.OrderNowController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchAdController</servlet-name>
+        <servlet-class>duytt.controller.SearchAdController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateProController</servlet-name>
+        <servlet-class>duytt.controller.UpdateProController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchHisController</servlet-name>
+        <servlet-class>duytt.controller.SearchHisController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoveController</servlet-name>
+        <servlet-class>duytt.controller.RemoveController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProductController</servlet-name>
+        <servlet-class>duytt.controller.AddProductController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddChangeController</servlet-name>
+        <servlet-class>duytt.controller.AddChangeController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -40,12 +84,68 @@
         <servlet-name>LogoutController</servlet-name>
         <url-pattern>/LogoutController</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Cart_AddController</servlet-name>
+        <url-pattern>/Cart_AddController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateRDController</servlet-name>
+        <url-pattern>/UpdateRDController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateIRController</servlet-name>
+        <url-pattern>/UpdateIRController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteProCartController</servlet-name>
+        <url-pattern>/DeleteProCartController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderNowController</servlet-name>
+        <url-pattern>/OrderNowController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchAdController</servlet-name>
+        <url-pattern>/SearchAdController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateProController</servlet-name>
+        <url-pattern>/UpdateProController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchHisController</servlet-name>
+        <url-pattern>/SearchHisController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveController</servlet-name>
+        <url-pattern>/RemoveController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProductController</servlet-name>
+        <url-pattern>/AddProductController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddChangeController</servlet-name>
+        <url-pattern>/AddChangeController</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>home.jsp</welcome-file>
+        <welcome-file>SearchController</welcome-file>
     </welcome-file-list>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errorPage.html</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/errorPage.html</location>
+    </error-page>
+    <error-page>
+        <error-code>503</error-code>
+        <location>/errorPage.html</location>
+    </error-page>
 </web-app>

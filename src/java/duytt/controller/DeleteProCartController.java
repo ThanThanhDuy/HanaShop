@@ -5,13 +5,10 @@
  */
 package duytt.controller;
 
-import duytt.daos.ProductDAO;
-import duytt.daos.UserDAO;
+import duytt.dtos.Cart;
 import duytt.dtos.Product;
 import duytt.dtos.User;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +19,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author thant
  */
-public class ProdcutController extends HttpServlet {
+public class DeleteProCartController extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -32,18 +29,51 @@ public class ProdcutController extends HttpServlet {
 	 * @throws ServletException if a servlet-specific error occurs
 	 * @throws IOException if an I/O error occurs
 	 */
-	private final static String ERROR = "login.jsp";
-	private final static String SUCCESS = "product.jsp";
+	private final static String ERROR = "view_cart.jsp";
+	private final static String SUCCESS = "view_cart.jsp";
+	private final static String NOTUSER = "login.jsp";
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		String url = ERROR;
 		try {
-//			List<Product> listProduct = (List<Product>) new ProductDAO().getProduct();
-//			request.setAttribute("LISTPRODUCT", listProduct);
-			url=SUCCESS;
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("USER");
+			if (user == null) {
+				url = NOTUSER;
+			} else {
+				if (user.getRoleID().equals("US")) {
+					Cart cart = (Cart) session.getAttribute("CART");
+					String proID = request.getParameter("proID");
+					if (proID != null) {
+						if (cart.getCart().containsKey(proID)) {
+							cart.delete(proID);
+							session.setAttribute("CART", cart);
+						} else {
+							request.setAttribute("DELETEFAIL", "please check again Product ID");
+						}
+					}else{
+						request.setAttribute("DELETEFAIL", "please check again Product ID");
+					}
+
+					int total = 0;
+					if (cart.getCart().values() != null) {
+						for (Product proS : cart.getCart().values()) {
+							total += proS.getPrice() * proS.getQuanity();
+						}
+					}
+					session.setAttribute("COUNT", cart.getCart().keySet().size());
+					session.setAttribute("CART", cart);
+					session.setAttribute("TOTAL", total);
+					url = SUCCESS;
+				} else {
+					url = NOTUSER;
+				}
+			}
+
 		} catch (Exception e) {
+			log("DeleteProCartController: "+e.toString());
 		} finally {
 			request.getRequestDispatcher(url).forward(request, response);
 		}
